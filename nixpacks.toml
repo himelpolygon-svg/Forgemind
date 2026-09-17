@@ -1,0 +1,6 @@
+# better-sqlite3 is a native module: if Railway's build server doesn't have a
+# ready-made binary for its exact Node version, npm falls back to compiling
+# it from source, which needs Python and basic build tools. Nixpacks doesn't
+# include those by default for a plain Node app, so this adds them.
+[phases.setup]
+nixPkgs = ["python3", "gcc", "gnumake"]
