@@ -1,0 +1,77 @@
+<% pageTitle = meta.label %>
+<%- include('../partials/admin-top') %>
+
+<p class="help-text" style="margin-top:0;"><%= meta.help %> Drag rows by the ⠿ handle to reorder.</p>
+
+<div class="actions-row" style="margin-top:0;margin-bottom:20px;">
+  <a href="/admin/collection/<%= meta.key %>/new" class="btn btn-primary">+ Add new</a>
+</div>
+
+<div class="card" style="padding:0;">
+  <table class="list-table" id="sortable-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% items.forEach(function(item){ %>
+        <tr data-id="<%= item.id %>" class="<%= item.is_active ? '' : 'inactive' %>">
+          <td class="drag-handle">⠿</td>
+          <td><% if (item.image) { %><img class="thumb" src="<%= item.image %>" alt=""><% } %></td>
+          <td><%= item.title %><% if (item.subtitle) { %><br><span style="color:var(--text-dim);font-size:12px;"><%= item.subtitle %></span><% } %></td>
+          <td><span class="badge-pill <%= item.is_active ? 'active' : 'inactive' %>"><%= item.is_active ? 'Active' : 'Hidden' %></span></td>
+          <td>
+            <div class="row-actions">
+              <a class="btn btn-secondary btn-sm" href="/admin/collection/<%= meta.key %>/<%= item.id %>/edit">Edit</a>
+              <form method="post" action="/admin/collection/<%= meta.key %>/<%= item.id %>/delete" onsubmit="return confirm('Delete this item? This cannot be undone.');">
+                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <% if (!items.length) { %>
+    <p class="empty-state" style="padding:20px;">Nothing here yet — click "Add new" to create the first one.</p>
+  <% } %>
+</div>
+
+<script>
+(function(){
+  var table = document.getElementById('sortable-table');
+  if (!table) return;
+  var tbody = table.querySelector('tbody');
+  var dragEl = null;
+
+  tbody.querySelectorAll('tr').forEach(function(row){
+    row.setAttribute('draggable', 'true');
+    row.addEventListener('dragstart', function(){ dragEl = row; row.style.opacity = '0.4'; });
+    row.addEventListener('dragend', function(){ row.style.opacity = ''; sendOrder(); });
+    row.addEventListener('dragover', function(e){
+      e.preventDefault();
+      var target = e.target.closest('tr');
+      if (!target || target === dragEl) return;
+      var rect = target.getBoundingClientRect();
+      var next = (e.clientY - rect.top) / rect.height > 0.5;
+      tbody.insertBefore(dragEl, next ? target.nextSibling : target);
+    });
+  });
+
+  function sendOrder(){
+    var ids = Array.from(tbody.querySelectorAll('tr')).map(function(r){ return r.getAttribute('data-id'); });
+    fetch('/admin/collection/<%= meta.key %>/reorder', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids: ids })
+    });
+  }
+})();
+</script>
+
+<%- include('../partials/admin-bottom') %>

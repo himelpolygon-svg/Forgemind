@@ -1,0 +1,28 @@
+<% pageTitle = 'Media Library' %>
+<%- include('../partials/admin-top') %>
+
+<p class="help-text" style="margin-top:0;">Every image uploaded through the admin panel ends up here. Upload new files, or grab a URL to paste into a section.</p>
+
+<div class="card">
+  <form method="post" action="/admin/media/upload" enctype="multipart/form-data" style="display:flex;gap:12px;align-items:center;">
+    <input type="file" name="files" accept="image/*" multiple required>
+    <button class="btn btn-primary" type="submit">Upload</button>
+  </form>
+</div>
+
+<div class="media-grid">
+  <% files.forEach(function(f){ %>
+    <div class="media-item">
+      <img src="<%= f.url %>" alt="">
+      <span class="fname"><%= f.name %></span>
+      <form method="post" action="/admin/media/<%= encodeURIComponent(f.name) %>/delete" onsubmit="return confirm('Delete this file? Anything still using it will show a broken image.');">
+        <button class="btn btn-danger btn-sm" type="submit" style="width:100%;">Delete</button>
+      </form>
+    </div>
+  <% }); %>
+</div>
+<% if (!files.length) { %>
+  <p class="empty-state">No uploads yet.</p>
+<% } %>
+
+<%- include('../partials/admin-bottom') %>

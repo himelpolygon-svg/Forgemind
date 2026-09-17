@@ -1,0 +1,28 @@
+<% pageTitle = 'Dashboard' %>
+<%- include('../partials/admin-top') %>
+
+<p class="help-text" style="margin-top:0;">Welcome back, <%= currentUser.name %>. Pick a section below to edit its text and images, or open a collection to add, remove and reorder cards.</p>
+
+<% Object.keys(groups).forEach(function(groupName){ %>
+  <h2 style="font-size:14px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.8px;margin:28px 0 12px;"><%= groupName %></h2>
+  <div class="dash-grid">
+    <% groups[groupName].sections.forEach(function(s){ %>
+      <div class="dash-card">
+        <h3>Section</h3>
+        <ul>
+          <li><a href="/admin/section/<%= s.key %>"><%= s.label %><span class="desc"><%= s.help %></span></a></li>
+        </ul>
+      </div>
+    <% }); %>
+    <% groups[groupName].collections.forEach(function(c){ %>
+      <div class="dash-card">
+        <h3>Collection</h3>
+        <ul>
+          <li><a href="/admin/collection/<%= c.key %>"><%= c.label %><span class="desc"><%= c.help %></span></a></li>
+        </ul>
+      </div>
+    <% }); %>
+  </div>
+<% }); %>
+
+<%- include('../partials/admin-bottom') %>

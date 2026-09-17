@@ -1,0 +1,65 @@
+<script>
+(function(){
+  var PAGES = ['index.html', 'about.html'];
+
+  function currentFile(){
+    var f = location.pathname.split('/').pop();
+    return f || 'index.html';
+  }
+
+  function setActiveNav(file){
+    document.querySelectorAll('.nav-links a').forEach(function(a){
+      a.classList.remove('active');
+    });
+    var link = document.querySelector('.nav-links a[href="' + file + '"]');
+    if (link) link.classList.add('active');
+  }
+
+  function swapIn(html, file){
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var newMain = doc.getElementById('page-main');
+    var curMain = document.getElementById('page-main');
+    if (!newMain || !curMain) return false;
+    curMain.innerHTML = newMain.innerHTML;
+    if (doc.title) document.title = doc.title;
+    setActiveNav(file);
+    window.scrollTo(0, 0);
+    return true;
+  }
+
+  function loadPage(file, addHistory){
+    fetch(file, { cache: 'no-cache' }).then(function(res){
+      if (!res.ok) throw new Error('bad response');
+      return res.text();
+    }).then(function(html){
+      if (swapIn(html, file)) {
+        if (addHistory) history.pushState({ spaFile: file }, '', file);
+      } else {
+        window.location.href = file;
+      }
+    }).catch(function(){
+      // Fetch isn't available (e.g. opened directly as a local file in a
+      // browser that blocks file:// requests) - fall back to a normal
+      // full page navigation so the link still works.
+      window.location.href = file;
+    });
+  }
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a');
+    if (!a) return;
+    var href = a.getAttribute('href');
+    if (PAGES.indexOf(href) === -1) return;
+    if (href === currentFile()) { e.preventDefault(); return; }
+    e.preventDefault();
+    loadPage(href, true);
+  });
+
+  window.addEventListener('popstate', function(){
+    loadPage(currentFile(), false);
+  });
+})();
+</script>
+
+</body>
+</html>

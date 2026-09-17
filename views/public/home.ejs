@@ -1,0 +1,176 @@
+<%- include('../partials/site-head', { title: 'ForgeMind — Forging Future Intelligence' }) %>
+<body>
+<div class="wrap">
+
+  <%- include('../partials/site-header', { global: global, activePage: 'index.html' }) %>
+
+  <main id="page-main">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="bg-photo">
+        <img src="<%= hero.bg_image %>" alt="">
+      </div>
+      <div class="hero-content">
+        <div class="hero-glow"></div>
+        <h1><%= hero.heading_pre %><br>
+          <span class="grad"><%= hero.heading_highlight %></span><%= hero.heading_post %></h1>
+        <p><%= hero.paragraph %></p>
+        <a href="<%= hero.button_link %>" class="btn btn-white"><%= hero.button_text %></a>
+      </div>
+      <div class="hero-fade"></div>
+    </section>
+
+    <!-- INTRO -->
+    <section class="intro">
+      <div class="inner">
+        <p><%= intro.paragraph %></p>
+        <a href="about.html" class="btn btn-outline"><%= intro.button_text %></a>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="products">
+      <div class="head">
+        <div class="badge">
+          <span class="dot"></span>
+          <span><%= productsHead.badge_text %></span>
+        </div>
+        <h2 class="section-heading"><%= productsHead.heading %></h2>
+        <div class="filters">
+          <% productsHead.filters.split(',').forEach(function(f, i){ %>
+            <div class="filter <%= i === 0 ? 'active' : '' %>"><%= f.trim() %></div>
+          <% }); %>
+        </div>
+      </div>
+
+      <div class="product-track">
+        <% products.forEach(function(p){ %>
+          <div class="product-card">
+            <div class="glow"></div>
+            <div class="pc-text">
+              <div class="pill"><%= p.subtitle %></div>
+              <h3><%= p.title %></h3>
+              <p class="desc"><%= p.body %></p>
+            </div>
+            <div class="pc-image"><img src="<%= p.image %>" alt=""></div>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services">
+      <div class="ellipse-glow"></div>
+      <div class="head">
+        <div class="badge">
+          <span class="dot"></span>
+          <span><%= servicesHead.badge_text %></span>
+        </div>
+        <h2 class="section-heading"><%= servicesHead.heading %></h2>
+      </div>
+
+      <div class="services-grid">
+        <% services.forEach(function(s, i){ %>
+          <div class="service-card">
+            <div class="thumb"><img src="<%= s.image %>" alt=""></div>
+            <div class="num"><%= String(i + 1).padStart(2, '0') %></div>
+            <div class="title-row">
+              <h3><%= s.title %></h3>
+              <img class="arrow" src="/icons/arrow-right.svg" alt="">
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <%- include('../partials/why-section', { why: why }) %>
+
+    <!-- WORKING PROCESS -->
+    <section class="process">
+      <div class="head">
+        <div class="badge">
+          <span class="dot"></span>
+          <span><%= process.badge_text %></span>
+        </div>
+        <h2 class="section-heading"><%= process.heading %></h2>
+      </div>
+
+      <div class="process-rows">
+        <div class="process-row">
+          <div class="process-card card-1">
+            <div class="step-no">01.</div>
+            <div class="step-body">
+              <h3><%= process.step1_title %></h3>
+              <p><%= process.step1_body %></p>
+            </div>
+            <img class="pimg" src="<%= process.step1_image %>" alt="">
+          </div>
+          <div class="process-card card-2">
+            <div class="step-no">02.</div>
+            <div class="step-body">
+              <h3><%= process.step2_title %></h3>
+              <p><%= process.step2_body %></p>
+            </div>
+            <img class="pimg" src="<%= process.step2_image %>" alt="">
+          </div>
+        </div>
+        <div class="process-row">
+          <div class="process-card card-3">
+            <div class="step-no">03.</div>
+            <div class="step-body">
+              <h3><%= process.step3_title %></h3>
+              <p><%= process.step3_body %></p>
+            </div>
+            <img class="pimg" src="<%= process.step3_image %>" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact">
+      <div class="contact-card">
+        <div class="bgimg"><img src="<%= contact.bg_image %>" alt=""></div>
+        <div class="contact-inner">
+          <div class="contact-left">
+            <h2><%= contact.heading %></h2>
+            <div class="info">
+              <div>Phone : <%= contact.phone %></div>
+              <div>Email : <%= contact.email %></div>
+              <div>Location : <%= contact.location %></div>
+            </div>
+          </div>
+          <form class="contact-right" onsubmit="return false;">
+            <div class="form-row">
+              <div class="form-field">
+                <label>Name <span class="req">*</span></label>
+                <input type="text" placeholder="Enter Name">
+              </div>
+              <div class="form-field">
+                <label>Email Address <span class="req">*</span></label>
+                <input type="email" placeholder="Enter Address">
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Phone Number <span class="req">*</span></label>
+              <input type="tel" placeholder="Enter Phone Number">
+            </div>
+            <div class="form-field">
+              <label>Message <span class="req">*</span></label>
+              <input type="text" placeholder="Enter Message">
+            </div>
+            <button type="submit" class="send-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <%- include('../partials/site-footer', { global: global, footer: footer, footerServices: footerServices }) %>
+
+</div>
+
+<%- include('../partials/site-script') %>

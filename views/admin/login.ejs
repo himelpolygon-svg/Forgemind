@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Log in — ForgeMind Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <div class="login-wrap">
+    <div class="login-box">
+      <div class="brand">
+        <img src="/uploads/logo.png" alt="ForgeMind">
+      </div>
+      <h1>Sign in to the admin panel</h1>
+      <% if (error) { %>
+        <div class="flash error"><%= error %></div>
+      <% } %>
+      <form method="post" action="/admin/login">
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" required autofocus>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" name="password" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Log in</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

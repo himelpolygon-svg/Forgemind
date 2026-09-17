@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title><%= typeof pageTitle !== 'undefined' ? pageTitle + ' — ForgeMind Admin' : 'ForgeMind Admin' %></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="sidebar">
+    <div class="brand"><img src="/uploads/logo.png" alt="ForgeMind"><span>Admin Panel</span></div>
+    <nav>
+      <a href="/admin" class="<%= currentPath === '/admin' ? 'active' : '' %>">Dashboard</a>
+      <% const groupsSeen = {}; %>
+      <% NAV.SECTIONS.forEach(function(s){ %>
+        <% if (!groupsSeen[s.group]) { groupsSeen[s.group] = true; %>
+          <div class="group-label"><%= s.group %></div>
+        <% } %>
+        <a href="/admin/section/<%= s.key %>" class="<%= currentPath === '/admin/section/' + s.key ? 'active' : '' %>"><%= s.label %></a>
+      <% }); %>
+      <div class="group-label">Collections</div>
+      <% NAV.COLLECTIONS.forEach(function(c){ %>
+        <a href="/admin/collection/<%= c.key %>" class="<%= currentPath.indexOf('/admin/collection/' + c.key) === 0 ? 'active' : '' %>"><%= c.label %></a>
+      <% }); %>
+      <div class="group-label">Media</div>
+      <a href="/admin/media" class="<%= currentPath === '/admin/media' ? 'active' : '' %>">Media Library</a>
+      <% if (currentUser && currentUser.role === 'admin') { %>
+        <div class="group-label">Team</div>
+        <a href="/admin/users" class="<%= currentPath === '/admin/users' ? 'active' : '' %>">Users</a>
+      <% } %>
+    </nav>
+    <div class="sidebar-footer">
+      <div style="font-size:13px;color:var(--text-dim);">Signed in as<br><strong style="color:var(--text);"><%= currentUser.name %></strong> (<%= currentUser.role %>)</div>
+      <form method="post" action="/admin/logout">
+        <button class="btn btn-secondary btn-sm" type="submit" style="width:100%;margin-top:8px;">Log out</button>
+      </form>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <h1><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Dashboard' %></h1>
+      <a href="/" target="_blank" class="btn btn-secondary btn-sm">View live site ↗</a>
+    </div>
+    <div class="content">
+      <% if (flash) { %>
+        <div class="flash <%= flash.type %>"><%= flash.text %></div>
+      <% } %>

@@ -1,0 +1,26 @@
+{
+  "name": "forgemind-cms",
+  "version": "1.0.0",
+  "description": "ForgeMind website with a built-in admin panel (Node.js + Express + SQLite).",
+  "main": "app.js",
+  "scripts": {
+    "start": "node scripts/seed.js && node app.js",
+    "seed": "node scripts/seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.0.3",
+    "connect-sqlite3": "^0.9.18",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "multer": "^2.4.0"
+  }
+}

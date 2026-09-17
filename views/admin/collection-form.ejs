@@ -1,0 +1,39 @@
+<% pageTitle = (item ? 'Edit' : 'Add') + ' — ' + meta.label %>
+<%- include('../partials/admin-top') %>
+
+<form method="post" action="/admin/collection/<%= meta.key %>/<%= item ? item.id + '/edit' : 'new' %>" enctype="multipart/form-data">
+  <div class="card">
+    <% meta.fields.forEach(function(f){ %>
+      <% var label = (meta.fieldLabels && meta.fieldLabels[f]) || f.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase()); %>
+      <div class="field">
+        <label><%= label %></label>
+        <% if (f === 'image') { %>
+          <div class="img-preview">
+            <% if (item && item.image) { %><img src="<%= item.image %>" alt=""><% } %>
+            <input type="file" name="image" accept="image/*">
+          </div>
+        <% } else if (f === 'body') { %>
+          <textarea name="body"><%= item ? item.body : '' %></textarea>
+        <% } else { %>
+          <input type="text" name="<%= f %>" value="<%= item ? item[f] : '' %>">
+        <% } %>
+      </div>
+    <% }); %>
+
+    <% if (item) { %>
+      <div class="field">
+        <label class="checkbox-row" style="cursor:pointer;">
+          <input type="checkbox" name="is_active" value="1" <%= item.is_active ? 'checked' : '' %>>
+          <span>Visible on the live site</span>
+        </label>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="actions-row">
+    <button class="btn btn-primary" type="submit"><%= item ? 'Save changes' : 'Add item' %></button>
+    <a href="/admin/collection/<%= meta.key %>" class="btn btn-secondary">Cancel</a>
+  </div>
+</form>
+
+<%- include('../partials/admin-bottom') %>

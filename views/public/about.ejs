@@ -1,0 +1,162 @@
+<%- include('../partials/site-head', { title: 'About Us — ForgeMind' }) %>
+<body>
+<div class="wrap">
+
+  <%- include('../partials/site-header', { global: global, activePage: 'about.html' }) %>
+
+  <main id="page-main">
+
+    <!-- ABOUT HERO -->
+    <section class="about-hero">
+      <div class="glow-blob" style="left:1780px;top:140px;width:320px;height:320px;"></div>
+      <div class="glow-blob" style="left:816px;top:1076px;width:320px;height:320px;"></div>
+      <div class="glow-blob" style="left:-116px;top:111px;width:320px;height:320px;"></div>
+
+      <div class="about-hero-inner">
+        <div class="about-hero-text">
+          <div class="badge">
+            <span class="dot"></span>
+            <span><%= aboutHero.badge_text %></span>
+          </div>
+          <h1><%= aboutHero.heading_pre %><span class="gold"><%= aboutHero.heading_gold %></span></h1>
+          <p><%= aboutHero.paragraph %></p>
+        </div>
+        <div class="about-hero-image">
+          <img src="<%= aboutHero.image %>" alt="Team meeting at ForgeMind">
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-section">
+      <div class="stats-bar">
+        <div class="stat"><div class="num"><%= stats.stat1_num %></div><div class="label"><%= stats.stat1_label %></div></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><div class="num"><%= stats.stat2_num %></div><div class="label"><%= stats.stat2_label %></div></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><div class="num"><%= stats.stat3_num %></div><div class="label"><%= stats.stat3_label %></div></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><div class="num"><%= stats.stat4_num %></div><div class="label"><%= stats.stat4_label %></div></div>
+      </div>
+    </section>
+
+    <!-- OUR STORY -->
+    <section class="story-section">
+      <div class="story-card">
+        <div class="story-glow"></div>
+        <div class="story-text">
+          <div class="badge">
+            <span class="dot"></span>
+            <span><%= story.badge_text %></span>
+          </div>
+          <h2><%= story.heading %></h2>
+          <p><%= story.paragraph %></p>
+        </div>
+        <div class="story-image">
+          <img src="<%= story.image %>" alt="Team collaborating">
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE VALUES -->
+    <section class="values-section">
+      <div class="head">
+        <div class="badge">
+          <span class="dot"></span>
+          <span><%= valuesHead.badge_text %></span>
+        </div>
+        <h2 class="section-heading"><%= valuesHead.heading %></h2>
+      </div>
+      <div class="values-grid">
+        <% coreValues.forEach(function(v){ %>
+          <div class="value-card">
+            <img class="icon" src="<%= v.image %>" alt="">
+            <h4><%= v.title %></h4>
+            <p><%= v.body %></p>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+
+    <!-- MEET THE TEAM -->
+    <section class="team-section">
+      <div class="head">
+        <div class="badge">
+          <span class="dot"></span>
+          <span><%= teamHead.badge_text %></span>
+        </div>
+        <h2 class="section-heading"><%= teamHead.heading %></h2>
+      </div>
+      <div class="team-grid">
+        <% team.forEach(function(t){ %>
+          <div class="team-card">
+            <div class="photo"><img src="<%= t.image %>" alt="<%= t.title %>"></div>
+            <div class="meta">
+              <div>
+                <h4><%= t.title %></h4>
+                <div class="role"><%= t.subtitle %></div>
+              </div>
+              <div class="social-btns">
+                <a class="sbtn" href="<%= t.link_1 %>"><img src="/icons/social-instagram.svg" alt="Instagram"></a>
+                <a class="sbtn" href="<%= t.link_2 %>"><img class="li" src="/icons/social-linkedin.svg" alt="LinkedIn"></a>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+      <a href="#" class="btn btn-outline"><%= teamHead.see_all_text %></a>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <%- include('../partials/why-section', { why: why }) %>
+
+    <!-- CEO MESSAGE -->
+    <section class="ceo-section">
+      <div class="head">
+        <div class="badge">
+          <span class="dot"></span>
+          <span><%= ceo.badge_text %></span>
+        </div>
+        <h2 class="section-heading"><%= ceo.heading %></h2>
+      </div>
+      <div class="ceo-grid">
+        <div class="ceo-photo">
+          <img src="<%= ceo.photo %>" alt="<%= ceo.name %>">
+        </div>
+        <div class="ceo-quote-card">
+          <div class="ceo-quote-glow"></div>
+          <blockquote>
+            <p>&ldquo; <%= ceo.quote_p1 %></p>
+            <p><%= ceo.quote_p2 %> &rdquo;</p>
+          </blockquote>
+          <div class="ceo-footer">
+            <div>
+              <h4><%= ceo.name %></h4>
+              <div class="role"><%= ceo.role %></div>
+            </div>
+            <div class="social-btns">
+              <a class="sbtn" href="<%= ceo.link_instagram %>"><img src="/icons/social-instagram.svg" alt="Instagram"></a>
+              <a class="sbtn" href="<%= ceo.link_linkedin %>"><img class="li" src="/icons/social-linkedin.svg" alt="LinkedIn"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="bg"><img src="<%= cta.bg_image %>" alt=""></div>
+      <div class="cta-content">
+        <h2><%= cta.heading %></h2>
+        <p><%= cta.paragraph %></p>
+        <a href="#" class="btn btn-gold"><%= cta.button_text %></a>
+      </div>
+    </section>
+
+  </main>
+
+  <%- include('../partials/site-footer', { global: global, footer: footer, footerServices: footerServices }) %>
+
+</div>
+
+<%- include('../partials/site-script') %>

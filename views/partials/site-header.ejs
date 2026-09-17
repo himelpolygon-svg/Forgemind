@@ -1,0 +1,15 @@
+  <header class="site-header">
+    <div class="inner">
+      <div class="logo">
+        <img src="<%= global.logo %>" alt="ForgeMind - Forging Future Intelligence">
+      </div>
+      <nav class="nav-links">
+        <a href="index.html" class="<%= activePage === 'index.html' ? 'active' : '' %>">Home</a>
+        <a href="about.html" class="<%= activePage === 'about.html' ? 'active' : '' %>">About Us</a>
+        <a href="#">Services</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact Us</a>
+      </nav>
+      <a href="<%= global.cta_button_link %>" class="btn btn-gold"><%= global.cta_button_text %></a>
+    </div>
+  </header>

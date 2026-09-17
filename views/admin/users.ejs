@@ -1,0 +1,59 @@
+<% pageTitle = 'Team & Users' %>
+<%- include('../partials/admin-top') %>
+
+<p class="help-text" style="margin-top:0;">Add teammates who should be able to edit the site, and control who has admin access.</p>
+
+<div class="card" style="padding:0;">
+  <table class="list-table">
+    <thead><tr><th>Name</th><th>Email</th><th>Role</th><th></th></tr></thead>
+    <tbody>
+      <% list.forEach(function(u){ %>
+        <tr>
+          <td><%= u.name %></td>
+          <td><%= u.email %></td>
+          <td>
+            <form method="post" action="/admin/users/<%= u.id %>/role" style="display:inline-flex;gap:8px;align-items:center;">
+              <select name="role" onchange="this.form.submit()">
+                <option value="editor" <%= u.role === 'editor' ? 'selected' : '' %>>Editor</option>
+                <option value="admin" <%= u.role === 'admin' ? 'selected' : '' %>>Admin</option>
+              </select>
+            </form>
+          </td>
+          <td>
+            <div class="row-actions">
+              <details>
+                <summary class="btn btn-secondary btn-sm" style="display:inline-flex;cursor:pointer;">Reset password</summary>
+                <form method="post" action="/admin/users/<%= u.id %>/password" style="margin-top:8px;display:flex;gap:8px;">
+                  <input type="text" name="password" placeholder="New password" required>
+                  <button class="btn btn-secondary btn-sm" type="submit">Set</button>
+                </form>
+              </details>
+              <form method="post" action="/admin/users/<%= u.id %>/delete" onsubmit="return confirm('Remove this user?');">
+                <button class="btn btn-danger btn-sm" type="submit">Remove</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2>Add a teammate</h2>
+  <form method="post" action="/admin/users/new">
+    <div class="field"><label>Name</label><input type="text" name="name" required></div>
+    <div class="field"><label>Email</label><input type="email" name="email" required></div>
+    <div class="field"><label>Password</label><input type="text" name="password" required></div>
+    <div class="field">
+      <label>Role</label>
+      <select name="role">
+        <option value="editor">Editor — can edit content</option>
+        <option value="admin">Admin — can also manage users</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Add user</button>
+  </form>
+</div>
+
+<%- include('../partials/admin-bottom') %>
