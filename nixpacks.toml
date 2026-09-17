@@ -4,5 +4,7 @@
 # include those by default for a plain Node app, so this adds them via apt
 # (nixPkgs would work too, but it replaces Nixpacks' own auto-detected
 # Node.js/npm packages instead of adding to them, which breaks npm itself).
+# python3-setuptools provides the "distutils" module that node-gyp still
+# needs, which Python 3.12 removed from its standard library.
 [phases.setup]
-aptPkgs = ["python3", "build-essential"]
+aptPkgs = ["python3", "python3-setuptools", "build-essential"]
